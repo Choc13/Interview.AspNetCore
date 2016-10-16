@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,9 @@ namespace Interview.WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddCors()
+                .AddMvc();
             services.AddSwaggerGen();
         }
 
@@ -38,6 +41,7 @@ namespace Interview.WebApp
                 .UseDeveloperExceptionPage()
                 .UseDatabaseErrorPage()
                 .UseStaticFiles()
+                .UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
                 .UseMvc()
                 .UseSwagger()
                 .UseSwaggerUi("api");

@@ -70,5 +70,24 @@ namespace Interview.WebApp.Controllers
             }
             return overdue;
         }
+
+        [HttpPut]
+        public Todo Update([FromBody] Todo todo)
+        {
+            _todoContext.Todos.Update(todo);
+            _todoContext.SaveChanges();
+            return todo;
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            Todo todo = GetById(id);
+            if (todo != null)
+            {
+                _todoContext.Todos.Remove(todo);
+                _todoContext.SaveChanges();
+            }
+        }
     }
 }
